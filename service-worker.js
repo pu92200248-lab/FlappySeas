@@ -13,6 +13,9 @@ const FILES_TO_CACHE = [
   "/canvas.css",
   "/manifest.json",
   "https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.js"
+  "/Juego.js",
+  "/inicio.js",
+  "/gameover.js",
 ];
 
 // instalar el service worker
