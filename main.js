@@ -1,25 +1,28 @@
-{
-  "name": "Flappy Seas",
-  "short_name": "FlappySeas",
+const config = {
+    type: Phaser.AUTO,
 
-  "start_url": "./",
-  "scope": "./",
+    width:360,
+    height:640,
 
-  "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#000000",
-  "orientation": "landscape",
-
-  "icons": [
-    {
-      "src": "img/Calaca.png",
-      "sizes": "192x192",
-      "type": "image/png"
+    scale:{
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH
     },
-    {
-      "src": "img/fantasma.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
+    
+    physics:{
+        default:"arcade",
+        arcade:{
+            gravity:{y:0},
+            debug:false
+        }
+    },
+    scene:[Inicio,Juego,GameOver]
+};
+
+const game = new Phaser.Game(config);
+
+if (screen.orientation) { 
+    screen.orientation.lock("portrait").catch(function(error){
+        console.log("No se pudo bloquear orientación");
+    });
 }
