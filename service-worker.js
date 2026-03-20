@@ -13,10 +13,8 @@ const FILES_TO_CACHE = [
   "./img/fondo.png",
   "./img/boton1.png",
   "./img/boton2.png",
-  "./img/1.png",
-  "./img/2.png",
-  "./img/3.png",
-  "./img/Torre.png",
+  "./img/Calaca.png",
+  "./img/fantasma.png",
 
   "./audio/musica.mp3",
 
@@ -25,21 +23,16 @@ const FILES_TO_CACHE = [
 
 // INSTALAR
 self.addEventListener("install", (event) => {
-  console.log("SW instalado");
-
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(FILES_TO_CACHE);
     })
   );
-
   self.skipWaiting();
 });
 
 // ACTIVAR
 self.addEventListener("activate", (event) => {
-  console.log("SW activado");
-
   event.waitUntil(
     caches.keys().then((keys) => {
       return Promise.all(
@@ -51,29 +44,14 @@ self.addEventListener("activate", (event) => {
       );
     })
   );
-
   self.clients.claim();
 });
 
-// FETCH (offline)
+// FETCH
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
-
-      if (response) {
-        return response;
-      }
-
-      return fetch(event.request)
-        .then((networkResponse) => {
-          return caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, networkResponse.clone());
-            return networkResponse;
-          });
-        })
-        .catch(() => {
-          console.log("Offline:", event.request.url);
-        });
+      return response || fetch(event.request);
     })
   );
 });
